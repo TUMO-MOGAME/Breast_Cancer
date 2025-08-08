@@ -2,17 +2,26 @@
   "version": 2,
   "builds": [
     {
-      "src": "app.py",
-      "use": "@vercel/python"
+      "src": "wsgi.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "50mb"
+      }
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "app.py"
+      "dest": "wsgi.py"
     }
   ],
   "env": {
-    "PYTHONPATH": "./"
+    "PYTHONPATH": "./",
+    "PYTHONUNBUFFERED": "1"
+  },
+  "functions": {
+    "wsgi.py": {
+      "maxDuration": 30
+    }
   }
 }
